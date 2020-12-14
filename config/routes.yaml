@@ -12,3 +12,13 @@ product_create:
   path: /api/v1/products
   controller: App\Controller\ProductController::createAction
   methods: [POST]
+
+product_delete:
+  path: /api/v1/products/{id}
+  controller: App\Controller\ProductController::deleteAction
+  methods: [DELETE]
+
+costumer_list:
+  path: /api/v1/costumers
+  controller: App\Controller\CostumerController::indexAction
+  methods: [GET]

@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Controller\AbstractApiController;
 use App\Form\ProductType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ProductController extends AbstractApiController
 {
@@ -42,5 +43,17 @@ class ProductController extends AbstractApiController
         $this->getDoctrine()->getManager()->flush();
 
         return $this->json($product);
+    }
+
+    public function deleteAction($id): Response
+    {
+        $product = $this->getDoctrine()->getRepository(Product::class)->findOneBy(['id' => $id]);
+
+        if (!$product) throw new NotFoundHttpException('product does not exist');
+
+        $this->getDoctrine()->getManager()->remove($product);
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->json('product removed successfully');
     }
 }
