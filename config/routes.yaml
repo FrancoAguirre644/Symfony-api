@@ -22,3 +22,13 @@ costumer_list:
   path: /api/v1/costumers
   controller: App\Controller\CostumerController::indexAction
   methods: [GET]
+
+costumer_get:
+  path: /api/v1/costumers/{id}
+  controller: App\Controller\CostumerController::getAction
+  methods: [GET]
+
+costumer_create:
+  path: /api/v1/costumers
+  controller: App\Controller\CostumerController::createAction
+  methods: [POST]
