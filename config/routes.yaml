@@ -49,3 +49,23 @@ cart_show:
   methods: [GET]
   requirements:
     id: '\d+'
+
+cart_create:
+  path: /api/v1/carts
+  controller: App\Controller\CartController::createAction
+  methods: [POST]
+
+cart_update:
+  path: /api/v1/customers/{idCustomer}/cart
+  controller: App\Controller\CartController:updateAction
+  methods: [PATCH]
+  requirements:
+    idCustomer: '\d+'
+
+cart_delete:
+  path: /api/v1/customers/{idCustomer}/cart/{idCart}
+  controller: App\Controller\CartController::deleteAction
+  methods: [DELETE]
+  requirements:
+    idCustomer: '\d+'
+    idCart: '\d+'

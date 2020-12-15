@@ -21,9 +21,11 @@ class Cart
     private $id;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @var \DateTime|null
+     *
+     * @ORM\Column(name="date_time", type="datetime")
      */
-    private $date;
+    private $dateTime;
 
     /**
      * @var Customer|null
@@ -47,18 +49,6 @@ class Cart
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getDate(): ?\DateTimeInterface
-    {
-        return $this->date;
-    }
-
-    public function setDate(\DateTimeInterface $date): self
-    {
-        $this->date = $date;
-
-        return $this;
     }
 
     /**
@@ -91,5 +81,21 @@ class Cart
     public function setProducts($products): void
     {
         $this->products = $products;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getDateTime(): ?\DateTime
+    {
+        return $this->dateTime;
+    }
+
+    /**
+     * @param \DateTime|null $dateTime
+     */
+    public function setDateTime(?\DateTime $dateTime): void
+    {
+        $this->dateTime = $dateTime;
     }
 }

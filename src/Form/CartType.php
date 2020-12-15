@@ -30,12 +30,11 @@ class CartType extends AbstractType
                     new NotNull(),
                 ],
             ])
-            ->add('date', DateTimeType::class, [
+            ->add('dateTime', DateTimeType::class, [
+                'widget' => 'single_text',
                 'constraints' => [
-                    new NotNull([
-                        'message' => 'date can not be blank',
-                    ]),
-                ]
+                    new NotNull(),
+                ],
             ]);
     }
 
