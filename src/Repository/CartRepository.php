@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Costumer;
+use App\Entity\Cart;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Costumer|null find($id, $lockMode = null, $lockVersion = null)
- * @method Costumer|null findOneBy(array $criteria, array $orderBy = null)
- * @method Costumer[]    findAll()
- * @method Costumer[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Cart|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Cart|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Cart[]    findAll()
+ * @method Cart[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CostumerRepository extends ServiceEntityRepository
+class CartRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Costumer::class);
+        parent::__construct($registry, Cart::class);
     }
 
     // /**
-    //  * @return Costumer[] Returns an array of Costumer objects
+    //  * @return Cart[] Returns an array of Cart objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class CostumerRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Costumer
+    public function findOneBySomeField($value): ?Cart
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.exampleField = :val')

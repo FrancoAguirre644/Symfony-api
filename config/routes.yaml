@@ -19,16 +19,33 @@ product_delete:
   methods: [DELETE]
 
 costumer_list:
-  path: /api/v1/costumers
-  controller: App\Controller\CostumerController::indexAction
+  path: /api/v1/customers
+  controller: App\Controller\CustomerController::indexAction
   methods: [GET]
 
 costumer_get:
-  path: /api/v1/costumers/{id}
-  controller: App\Controller\CostumerController::getAction
+  path: /api/v1/customers/{id}
+  controller: App\Controller\CustomerController::getAction
   methods: [GET]
 
 costumer_create:
-  path: /api/v1/costumers
-  controller: App\Controller\CostumerController::createAction
+  path: /api/v1/customers
+  controller: App\Controller\CustomerController::createAction
   methods: [POST]
+
+costumer_delete:
+  path: /api/v1/customers/{id}
+  controller: App\Controller\CustomerController::deleteAction
+  methods: [DELETE]
+
+cart_list:
+  path: /api/v1/carts
+  controller: App\Controller\CartController::indexAction
+  methods: [GET]
+
+cart_show:
+  path: /api/v1/customers/{id}/cart
+  controller: App\Controller\CartController::showAction
+  methods: [GET]
+  requirements:
+    id: '\d+'

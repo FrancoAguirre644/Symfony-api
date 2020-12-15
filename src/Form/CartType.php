@@ -2,40 +2,38 @@
 
 namespace App\Form;
 
+use App\Entity\Cart;
+use App\Entity\Customer;
 use App\Entity\Product;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\NotNull;
 
-class ProductType extends AbstractType
+class CartType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('code', TextType::class, [
+            ->add('customer', EntityType::class, [
+                'class' => Customer::class,
                 'constraints' => [
                     new NotNull(),
-                ]
+                ],
             ])
-            ->add('title', TextType::class, [
+            ->add('products', EntityType::class, [
+                'class' => Product::class,
+                'multiple' => true,
                 'constraints' => [
                     new NotNull(),
-                ]
+                ],
             ])
-            ->add('description', TextType::class, [
+            ->add('date', DateTimeType::class, [
                 'constraints' => [
-                    new NotNull(),
-                ]
-            ])
-            ->add('price', NumberType::class, [
-                'constraints' => [
-                    new NotNull(),
-                    new GreaterThan([
-                        'value' => 0
+                    new NotNull([
+                        'message' => 'date can not be blank',
                     ]),
                 ]
             ]);
@@ -44,7 +42,7 @@ class ProductType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Product::class,
+            'data_class' => Cart::class,
         ]);
     }
 }

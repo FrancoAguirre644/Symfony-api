@@ -2,41 +2,41 @@
 
 namespace App\Form;
 
-use App\Entity\Product;
+use App\Entity\Customer;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\GreaterThan;
+use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotNull;
 
-class ProductType extends AbstractType
+class CustomerType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('code', TextType::class, [
+            ->add('email', EmailType::class, [
                 'constraints' => [
-                    new NotNull(),
-                ]
-            ])
-            ->add('title', TextType::class, [
-                'constraints' => [
-                    new NotNull(),
-                ]
-            ])
-            ->add('description', TextType::class, [
-                'constraints' => [
-                    new NotNull(),
-                ]
-            ])
-            ->add('price', NumberType::class, [
-                'constraints' => [
-                    new NotNull(),
-                    new GreaterThan([
-                        'value' => 0
+                    new NotNull([
+                        'message' => 'Email can not be blank',
                     ]),
+                    new Email(),
+                ]
+            ])
+            ->add('name', TextType::class, [
+                'constraints' => [
+                    new NotNull(),
+                ]
+            ])
+            ->add('lastName', TextType::class, [
+                'constraints' => [
+                    new NotNull(),
+                ]
+            ])
+            ->add('phoneNumber', TextType::class, [
+                'constraints' => [
+                    new NotNull(),
                 ]
             ]);
     }
@@ -44,7 +44,7 @@ class ProductType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Product::class,
+            'data_class' => Customer::class,
         ]);
     }
 }

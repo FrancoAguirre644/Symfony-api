@@ -32,7 +32,7 @@ class ProductController extends AbstractApiController
 
         $form->handleRequest($request);
 
-        if (!$form->isSubmitted() && !$form->isValid()) {
+        if (!$form->isSubmitted() || !$form->isValid()) {
             return $this->respond($form, Response::HTTP_BAD_REQUEST);
         }
 
@@ -49,11 +49,11 @@ class ProductController extends AbstractApiController
     {
         $product = $this->getDoctrine()->getRepository(Product::class)->findOneBy(['id' => $id]);
 
-        if (!$product) throw new NotFoundHttpException('product does not exist');
+        if (!$product) throw new NotFoundHttpException('Product does not exist');
 
         $this->getDoctrine()->getManager()->remove($product);
         $this->getDoctrine()->getManager()->flush();
 
-        return $this->json('product removed successfully');
+        return $this->json('Product removed successfully');
     }
 }
