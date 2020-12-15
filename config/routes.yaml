@@ -13,25 +13,39 @@ product_create:
   controller: App\Controller\ProductController::createAction
   methods: [POST]
 
+product_update:
+  path: /api/v1/products/{idProduct}
+  controller: App\Controller\ProductController:updateAction
+  methods: [PATCH]
+  requirements:
+    idProduct: '\d+'
+
 product_delete:
   path: /api/v1/products/{id}
   controller: App\Controller\ProductController::deleteAction
   methods: [DELETE]
 
-costumer_list:
+customer_list:
   path: /api/v1/customers
   controller: App\Controller\CustomerController::indexAction
   methods: [GET]
 
-costumer_get:
+customer_get:
   path: /api/v1/customers/{id}
   controller: App\Controller\CustomerController::getAction
   methods: [GET]
 
-costumer_create:
+customer_create:
   path: /api/v1/customers
   controller: App\Controller\CustomerController::createAction
   methods: [POST]
+
+customer_update:
+  path: /api/v1/customers/{idCustomer}
+  controller: App\Controller\CustomerController:updateAction
+  methods: [PATCH]
+  requirements:
+    idCustomer: '\d+'
 
 costumer_delete:
   path: /api/v1/customers/{id}

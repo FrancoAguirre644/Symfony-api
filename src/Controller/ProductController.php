@@ -45,6 +45,33 @@ class ProductController extends AbstractApiController
         return $this->json($product);
     }
 
+    public function updateAction(Request $request): Response
+    {
+        $idProduct = $request->get('idProduct');
+
+        $product = $this->getDoctrine()->getRepository(Product::class)->findOneBy(['id' => $idProduct]);
+
+        if (!$idProduct) throw new NotFoundHttpException('the product not exist');
+
+        $form = $this->buildForm(ProductType::class, $product, [
+            'method' => $request->getMethod(),
+        ]);
+
+        $form->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            return $this->respond($form, Response::HTTP_BAD_REQUEST);
+        }
+
+        /** @var Product $productUpdated */
+        $productUpdated = $form->getData();
+
+        $this->getDoctrine()->getManager()->persist($productUpdated);
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->json($productUpdated);
+    }
+
     public function deleteAction($id): Response
     {
         $product = $this->getDoctrine()->getRepository(Product::class)->findOneBy(['id' => $id]);
