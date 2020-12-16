@@ -15,7 +15,7 @@ product_create:
 
 product_update:
   path: /api/v1/products/{idProduct}
-  controller: App\Controller\ProductController:updateAction
+  controller: App\Controller\ProductController::updateAction
   methods: [PATCH]
   requirements:
     idProduct: '\d+'
@@ -42,7 +42,7 @@ customer_create:
 
 customer_update:
   path: /api/v1/customers/{idCustomer}
-  controller: App\Controller\CustomerController:updateAction
+  controller: App\Controller\CustomerController::updateAction
   methods: [PATCH]
   requirements:
     idCustomer: '\d+'
@@ -71,7 +71,7 @@ cart_create:
 
 cart_update:
   path: /api/v1/customers/{idCustomer}/cart
-  controller: App\Controller\CartController:updateAction
+  controller: App\Controller\CartController::updateAction
   methods: [PATCH]
   requirements:
     idCustomer: '\d+'
@@ -83,3 +83,32 @@ cart_delete:
   requirements:
     idCustomer: '\d+'
     idCart: '\d+'
+
+category_list:
+  path: /api/v1/categories
+  controller: App\Controller\CategoryController::indexAction
+  methods: [GET]
+
+category_show:
+  path: /api/v1/categories/{id}
+  controller: App\Controller\CategoryController::showAction
+  methods: [GET]
+  requirements:
+    id: '\d+'
+
+category_create:
+  path: /api/v1/categories
+  controller: App\Controller\CategoryController::createAction
+  methods: [POST]
+
+category_update:
+  path: /api/v1/categories/{id}
+  controller: App\Controller\CategoryController::updateAction
+  methods: [PATCH]
+  requirements:
+    id: '\d+'
+
+category_delete:
+  path: /api/v1/categories/{id}
+  controller: App\Controller\CategoryController::deleteAction
+  methods: [DELETE]
