@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -14,15 +14,14 @@ import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { apiAxios } from "../../../config/axios";
 
-
-export const Categories = () => {
+export const Products = () => {
 
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
-    const [categories, setCategories] = useState([]);
+    const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        getCategories();
+        getProducts();
     }, []);
 
     const handleChangePage = (event, newPage) => {
@@ -34,24 +33,24 @@ export const Categories = () => {
         setPage(0);
     };
 
-    const getCategories = () => {
+    const getProducts = () => {
 
         apiAxios
-            .get("/categories")
+            .get("/products")
             .then(({ data }) => {
-                setCategories(data);
+                setProducts(data);
             })
             .catch((error) => console.log(error));
 
     };
 
-    const deleteCategory = (id) => {
+    const deleteProduct = (id) => {
 
         apiAxios
-            .delete("/categories/" + id)
+            .delete("/products/" + id)
             .then(({ data }) => {
                 console.log(data);
-                getCategories();
+                getProducts();
             })
             .catch((error) => console.log(error));
     }
@@ -76,7 +75,8 @@ export const Categories = () => {
             justify="center"
             alignItems="center">
             {
-                categories.length > 0 ?
+                products.length > 0 ?
+
                     <Paper className={classes.root}>
                         <TableContainer >
                             <Table stickyHeader aria-label="sticky table">
@@ -86,7 +86,16 @@ export const Categories = () => {
                                             ID
                                         </TableCell>
                                         <TableCell>
-                                            Name
+                                            Title
+                                        </TableCell>
+                                        <TableCell>
+                                            Descripcion
+                                        </TableCell>
+                                        <TableCell>
+                                            Category
+                                        </TableCell>
+                                        <TableCell>
+                                            Price
                                         </TableCell>
                                         <TableCell>
                                             Actions
@@ -94,20 +103,23 @@ export const Categories = () => {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {categories.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((c) => {
+                                    {products.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((p) => {
                                         return (
-                                            <TableRow hover role="checkbox" tabIndex={-1} key={c.id}>
+                                            <TableRow hover role="checkbox" tabIndex={-1} key={p.id}>
                                                 <TableCell component="th" scope="row">
-                                                    {c.id}
+                                                    {p.id}
                                                 </TableCell>
-                                                <TableCell >{c.name}</TableCell>
+                                                <TableCell >{p.title}</TableCell>
+                                                <TableCell >{p.description}</TableCell>
+                                                <TableCell >{p.category.name}</TableCell>
+                                                <TableCell >${p.price}</TableCell>
                                                 <TableCell >
-                                                    <Link to={`/categories/update/${c.id}`}>
+                                                    <Link to={`/products/update/${p.id}`}>
                                                         <Button variant="contained" color="primary" className={classes.button}>
                                                             Update
-                                                            </Button>
+                                                        </Button>
                                                     </Link>
-                                                    <Button variant="contained" color="secondary" onClick={() => deleteCategory(c.id)} className={classes.button}>
+                                                    <Button variant="contained" color="secondary" onClick={() => deleteProduct(p.id)} className={classes.button}>
                                                         Delete
                                                     </Button>
                                                 </TableCell>
@@ -121,7 +133,7 @@ export const Categories = () => {
                         <TablePagination
                             rowsPerPageOptions={[10, 25, 100]}
                             component="div"
-                            count={categories.length}
+                            count={products.length}
                             rowsPerPage={rowsPerPage}
                             page={page}
                             onChangePage={handleChangePage}
@@ -132,7 +144,6 @@ export const Categories = () => {
                     :
                     <CircularProgress color="secondary" />
             }
-
         </Grid>
     );
 }
