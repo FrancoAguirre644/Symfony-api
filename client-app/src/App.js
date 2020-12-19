@@ -1,12 +1,14 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Home } from "../src/components/Home";
-import { Navbar } from "../src/components/Navbar";
+import Navbar from "./components/navbar/Navbar";
 import { Categories } from './components/crud/categories/Categories';
+import { Customers } from './components/crud/customers/Customers';
 import { Products } from './components/crud/products/Products';
 import { AddProduct } from './components/crud/products/AddProduct';
 import { UpdateProduct } from './components/crud/products/UpdateProduct';
 import { UpdateCategory } from './components/crud/categories/UpdateCategory';
 import { AddCategory } from './components/crud/categories/AddCategory';
+import { AddCustomer } from './components/crud/customers/AddCustomer';
 
 function App() {
   return (
@@ -34,6 +36,12 @@ function App() {
           </Route>
           <Route exact path="/categories/update/:id">
             <UpdateCategory />
+          </Route>
+          <Route exact path="/customers">
+            <Customers />
+          </Route>
+          <Route exact path="/customers/add">
+            <AddCustomer />
           </Route>
         </Switch>
       </div>

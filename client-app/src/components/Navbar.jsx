@@ -4,17 +4,22 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
+import StorefrontIcon from '@material-ui/icons/Storefront';
 
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
     },
     menuButton: {
-        marginRight: theme.spacing(2),
+        marginRight: theme.spacing(1),
+    },
+    button: {
+        color: '#FFFFFF',
     },
     title: {
         flexGrow: 1,
@@ -22,6 +27,10 @@ const useStyles = makeStyles((theme) => ({
     background: {
         backgroundColor: '#000000',
     },
+    link: {
+        textDecoration: 'none',
+        color: '#FFFFFF',
+    }
 }));
 
 export const Navbar = () => {
@@ -44,11 +53,31 @@ export const Navbar = () => {
             <AppBar position="static" className={classes.background}>
                 <Toolbar>
                     <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                        <MenuIcon />
+                        <Link to={"/"} className={classes.link} >
+                            <StorefrontIcon />
+                        </Link>
                     </IconButton>
+                    <Typography variant="h6" className={classes.menuButton}>
+                        <Link to={"/products"} className={classes.link} >
+                            <Button color="secondary" className={classes.button}>
+                                Products
+                            </Button>
+                        </Link>
+                    </Typography>
+                    <Typography variant="h6" className={classes.menuButton}>
+                        <Link to={"/categories"} className={classes.link} >
+                            <Button color="secondary" className={classes.button}>
+                                Categories
+                            </Button>
+                        </Link>
+                    </Typography>
                     <Typography variant="h6" className={classes.title}>
-                        Photos
-              </Typography>
+                        <Link to={"/customers"} className={classes.link} >
+                            <Button color="secondary" className={classes.button}>
+                                Customers
+                            </Button>
+                        </Link>
+                    </Typography>
                     <div>
                         <IconButton
                             aria-label="account of current user"

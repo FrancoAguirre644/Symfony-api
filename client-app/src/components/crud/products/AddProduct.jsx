@@ -128,7 +128,6 @@ export const AddProduct = () => {
                     :
                     <CircularProgress color="secondary" />
             }
-            {JSON.stringify(product)}
         </Grid >
     )
 }
