@@ -12,6 +12,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import AddIcon from '@material-ui/icons/Add';
 import { apiAxios } from "../../../config/axios";
 
 
@@ -45,15 +46,21 @@ export const Categories = () => {
 
     };
 
-    const deleteCategory = (id) => {
+    const deleteCategory = (id, name) => {
 
-        apiAxios
-            .delete("/categories/" + id)
-            .then(({ data }) => {
-                console.log(data);
-                getCategories();
-            })
-            .catch((error) => console.log(error));
+        const confirm = window.confirm("Are you sure you want to delete the category: " + name + "?");
+
+        if (confirm) {
+
+            apiAxios
+                .delete("/categories/" + id)
+                .then(({ data }) => {
+                    console.log(data);
+                    getCategories();
+                })
+                .catch((error) => console.log(error));
+
+        }
     }
 
     const useStyles = makeStyles({
@@ -65,6 +72,10 @@ export const Categories = () => {
         },
         button: {
             margin: 2,
+        },
+        link: {
+            textDecoration: 'none',
+            color: '#FFFFFF',
         }
     });
 
@@ -78,6 +89,16 @@ export const Categories = () => {
             {
                 categories.length > 0 ?
                     <Paper className={classes.root}>
+                        <Link to="/categories/add" className={classes.link}>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                className={classes.button}
+                                startIcon={<AddIcon />}
+                            >
+                                Add Category
+                            </Button>
+                        </Link>
                         <TableContainer >
                             <Table stickyHeader aria-label="sticky table">
                                 <TableHead>
@@ -102,12 +123,12 @@ export const Categories = () => {
                                                 </TableCell>
                                                 <TableCell >{c.name}</TableCell>
                                                 <TableCell >
-                                                    <Link to={`/categories/update/${c.id}`}>
+                                                    <Link to={`/categories/update/${c.id}`} className={classes.link}>
                                                         <Button variant="contained" color="primary" className={classes.button}>
                                                             Update
                                                             </Button>
                                                     </Link>
-                                                    <Button variant="contained" color="secondary" onClick={() => deleteCategory(c.id)} className={classes.button}>
+                                                    <Button variant="contained" color="secondary" onClick={() => deleteCategory(c.id, c.name)} className={classes.button}>
                                                         Delete
                                                     </Button>
                                                 </TableCell>

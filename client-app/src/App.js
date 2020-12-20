@@ -7,8 +7,10 @@ import { Products } from './components/crud/products/Products';
 import { AddProduct } from './components/crud/products/AddProduct';
 import { UpdateProduct } from './components/crud/products/UpdateProduct';
 import { UpdateCategory } from './components/crud/categories/UpdateCategory';
+import { UpdateCustomer } from './components/crud/customers/UpdateCustomer';
 import { AddCategory } from './components/crud/categories/AddCategory';
 import { AddCustomer } from './components/crud/customers/AddCustomer';
+import { Carts } from './components/crud/carts/Carts';
 
 function App() {
   return (
@@ -42,6 +44,12 @@ function App() {
           </Route>
           <Route exact path="/customers/add">
             <AddCustomer />
+          </Route>
+          <Route exact path="/customers/update/:id">
+            <UpdateCustomer />
+          </Route>
+          <Route exact path="/carts">
+            <Carts />
           </Route>
         </Switch>
       </div>

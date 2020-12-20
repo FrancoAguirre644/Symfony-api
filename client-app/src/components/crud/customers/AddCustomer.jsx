@@ -79,14 +79,12 @@ export const AddCustomer = () => {
                             <Button variant="contained" color="primary" color="primary"
                                 className={classes.button}
                                 startIcon={<AddIcon />} className={classes.button} onClick={handleSubmit}>
-                                Add
+                                Add Customer
                             </Button>
                         </Grid>
                     </Grid>
                 </form>
             </Paper>
-
-            {JSON.stringify(customer)}
         </Grid >
     )
 }

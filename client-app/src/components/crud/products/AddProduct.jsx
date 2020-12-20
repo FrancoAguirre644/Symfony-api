@@ -35,14 +35,12 @@ export const AddProduct = () => {
     }
 
     const getCategories = () => {
-
         apiAxios
             .get("/categories")
             .then(({ data }) => {
                 setCategories(data);
             })
             .catch((error) => console.log(error));
-
     }
 
     const handleSubmit = () => {
@@ -119,7 +117,7 @@ export const AddProduct = () => {
                                     <Button variant="contained" color="primary" color="primary"
                                         className={classes.button}
                                         startIcon={<AddIcon />} className={classes.button} onClick={handleSubmit}>
-                                        Add
+                                        Add Category
                                     </Button>
                                 </Grid>
                             </Grid>

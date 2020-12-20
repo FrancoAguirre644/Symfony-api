@@ -41,6 +41,11 @@ class Cart
      */
     private $products;
 
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $total;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -97,5 +102,30 @@ class Cart
     public function setDateTime(?\DateTime $dateTime): void
     {
         $this->dateTime = $dateTime;
+    }
+
+    public function setTotalCart(): self
+    {
+        $total = 0;
+
+        foreach ($this->products as $p) {
+            $total += $p->getPrice();
+        }
+
+        $this->total = $total;
+
+        return $this;
+    }
+
+    public function getTotal(): ?float
+    {
+        return $this->total;
+    }
+
+    public function setTotal(float $total): self
+    {
+        $this->total = $total;
+
+        return $this;
     }
 }

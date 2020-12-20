@@ -48,6 +48,8 @@ class CartController extends AbstractApiController
         /** @var Cart $cart */
         $cart = $form->getData();
 
+        $cart->setTotalCart();
+
         $this->getDoctrine()->getManager()->persist($cart);
         $this->getDoctrine()->getManager()->flush();
 

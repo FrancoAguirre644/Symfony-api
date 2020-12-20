@@ -10,6 +10,12 @@ import {
 } from "@material-ui/core";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import PersonIcon from '@material-ui/icons/Person';
+import CategoryIcon from '@material-ui/icons/Category';
+import StorefrontIcon from '@material-ui/icons/Storefront';
+import { Link } from 'react-router-dom';
+
 
 const styles = theme => ({
     list: {
@@ -17,6 +23,10 @@ const styles = theme => ({
     },
     fullList: {
         width: "auto"
+    },
+    link: {
+        textDecoration: 'none',
+        color: '#000000',
     }
 });
 
@@ -36,14 +46,46 @@ class DrawerComponent extends React.Component {
                 onKeyDown={this.props.toggleDrawerHandler}
             >
                 <List>
-                    {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>
-                                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                    <Link to={"/products"} className={classes.link} >
+                        <ListItem button>
+                            <ListItemIcon className={classes.link}>
+                                <StorefrontIcon />
                             </ListItemIcon>
-                            <ListItemText primary={text} />
+
+                            <ListItemText primary="Products" />
                         </ListItem>
-                    ))}
+                    </Link>
+
+                    <Link to={"/categories"} className={classes.link} >
+                        <ListItem button >
+                            <ListItemIcon className={classes.link}>
+                                <CategoryIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Categories" />
+                        </ListItem>
+                    </Link>
+
+                    <Link to={"/customers"} className={classes.link} >
+                        <ListItem button>
+
+                            <ListItemIcon className={classes.link}>
+                                <PersonIcon />
+                            </ListItemIcon>
+
+                            <ListItemText primary="Customers" />
+                        </ListItem>
+                    </Link>
+
+                    <Link to={"/carts"} className={classes.link} >
+                        <ListItem button>
+
+                            <ListItemIcon className={classes.link}>
+                                <ShoppingCartIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Carts" />
+                        </ListItem>
+                    </Link>
+
                 </List>
                 <Divider />
                 <List>
@@ -56,7 +98,7 @@ class DrawerComponent extends React.Component {
                         </ListItem>
                     ))}
                 </List>
-            </div>
+            </div >
         );
 
         return (

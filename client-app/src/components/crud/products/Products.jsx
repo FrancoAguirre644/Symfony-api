@@ -12,6 +12,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import AddIcon from '@material-ui/icons/Add';
 import { apiAxios } from "../../../config/axios";
 
 export const Products = () => {
@@ -44,15 +45,21 @@ export const Products = () => {
 
     };
 
-    const deleteProduct = (id) => {
+    const deleteProduct = (id, name) => {
 
-        apiAxios
-            .delete("/products/" + id)
-            .then(({ data }) => {
-                console.log(data);
-                getProducts();
-            })
-            .catch((error) => console.log(error));
+        const confirm = window.confirm("Are you sure you want to delete the product: " + name + "?");
+
+        if (confirm) {
+
+            apiAxios
+                .delete("/products/" + id)
+                .then(({ data }) => {
+                    console.log(data);
+                    getProducts();
+                })
+                .catch((error) => console.log(error));
+
+        }
     }
 
     const useStyles = makeStyles({
@@ -64,6 +71,10 @@ export const Products = () => {
         },
         button: {
             margin: 2,
+        },
+        link: {
+            textDecoration: 'none',
+            color: '#FFFFFF',
         }
     });
 
@@ -78,6 +89,17 @@ export const Products = () => {
                 products.length > 0 ?
 
                     <Paper className={classes.root}>
+                        <Link to="/products/add" className={classes.link}>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                className={classes.button}
+                                startIcon={<AddIcon />}
+                                className={classes.link}
+                            >
+                                Add Product
+                            </Button>
+                        </Link>
                         <TableContainer >
                             <Table stickyHeader aria-label="sticky table">
                                 <TableHead>
@@ -114,12 +136,12 @@ export const Products = () => {
                                                 <TableCell >{p.category.name}</TableCell>
                                                 <TableCell >${p.price}</TableCell>
                                                 <TableCell >
-                                                    <Link to={`/products/update/${p.id}`}>
+                                                    <Link to={`/products/update/${p.id}`} className={classes.link}>
                                                         <Button variant="contained" color="primary" className={classes.button}>
                                                             Update
                                                         </Button>
                                                     </Link>
-                                                    <Button variant="contained" color="secondary" onClick={() => deleteProduct(p.id)} className={classes.button}>
+                                                    <Button variant="contained" color="secondary" onClick={() => deleteProduct(p.id, p.title)} className={classes.button}>
                                                         Delete
                                                     </Button>
                                                 </TableCell>

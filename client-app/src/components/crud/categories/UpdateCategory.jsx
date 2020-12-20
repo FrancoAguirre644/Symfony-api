@@ -7,11 +7,14 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Box from '@material-ui/core/Box';
+import { useHistory } from "react-router-dom";
+import UpdateIcon from '@material-ui/icons/Update';
 import { apiAxios } from "../../../config/axios";
 
 export const UpdateCategory = () => {
 
     const [category, setCategory] = useState({});
+    const history = useHistory();
 
     useEffect(() => {
         getCategory();
@@ -20,14 +23,12 @@ export const UpdateCategory = () => {
     const { id } = useParams();
 
     const getCategory = () => {
-
         apiAxios
             .get("/categories/" + id)
             .then(({ data }) => {
                 setCategory(data);
             })
             .catch((error) => console.log(error));
-
     }
 
     const handleChange = async e => {
@@ -44,7 +45,8 @@ export const UpdateCategory = () => {
         apiAxios
             .patch("/categories/" + id, category)
             .then(({ data }) => {
-                alert(data);
+                console.log(data);
+                history.push('/categories');
             })
             .catch((error) => console.log(error));
     }
@@ -86,7 +88,10 @@ export const UpdateCategory = () => {
 
                         <form className={classes.form} noValidate autoComplete="off">
                             <TextField id="outlined-basic" label="Name" variant="outlined" name="name" className={classes.input} value={category.name} onChange={handleChange} />
-                            <Button variant="contained" color="primary" className={classes.button} onClick={handleSubmit}>
+                            <Button variant="contained" color="primary" color="primary"
+                                className={classes.button}
+                                startIcon={<UpdateIcon />} className={classes.button}
+                                onClick={handleSubmit} >
                                 Update
                             </Button>
                         </form>

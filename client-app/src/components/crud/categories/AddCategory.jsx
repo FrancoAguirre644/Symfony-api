@@ -6,6 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import { useHistory } from "react-router-dom";
+import AddIcon from '@material-ui/icons/Add';
 import { apiAxios } from "../../../config/axios";
 
 export const AddCategory = () => {
@@ -68,8 +69,10 @@ export const AddCategory = () => {
 
                 <form className={classes.form} noValidate autoComplete="off">
                     <TextField id="outlined-basic" label="Name" variant="outlined" name="name" className={classes.input} value={category.name} onChange={handleChange} />
-                    <Button variant="contained" color="primary" className={classes.button} onClick={handleSubmit}>
-                        Add
+                    <Button variant="contained" color="primary" color="primary"
+                        className={classes.button}
+                        startIcon={<AddIcon />} className={classes.button} onClick={handleSubmit}>
+                        Add Category
                     </Button>
                 </form>
 

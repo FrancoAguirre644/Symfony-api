@@ -59,7 +59,7 @@ class ProductController extends AbstractApiController
 
         $form->handleRequest($request);
 
-        if (!$form->isSubmitted() || !$form->isValid()) {
+        if (!$form->isSubmitted()) {
             return $this->respond($form, Response::HTTP_BAD_REQUEST);
         }
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -11,18 +11,19 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import ButtonBase from '@material-ui/core/ButtonBase';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import AddIcon from '@material-ui/icons/Add';
 import { apiAxios } from "../../../config/axios";
 
-export const Customers = () => {
+
+export const Carts = () => {
 
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
-    const [customers, setCustomers] = useState([]);
+    const [carts, setCarts] = useState([]);
 
     useEffect(() => {
-        getCustomers();
+        getCarts();
     }, []);
 
     const handleChangePage = (event, newPage) => {
@@ -34,32 +35,27 @@ export const Customers = () => {
         setPage(0);
     };
 
-    const getCustomers = () => {
+    const getCarts = () => {
 
         apiAxios
-            .get("/customers")
+            .get("/carts")
             .then(({ data }) => {
                 console.log(data);
-                setCustomers(data);
+                setCarts(data);
             })
             .catch((error) => console.log(error));
 
     };
 
-    const deleteCustomer = (id, name) => {
+    const deleteCart = (idCustomer, idCart) => {
 
-        const confirm = window.confirm("Are you sure you want to delete the customer: " + name + "?");
-
-        if (confirm) {
-
-            apiAxios
-                .delete("/customers/" + id)
-                .then(({ data }) => {
-                    getCustomers();
-                })
-                .catch((error) => console.log(error));
-
-        }
+        apiAxios
+            .delete("/customers/" + idCustomer + "/cart/" + idCart)
+            .then(({ data }) => {
+                console.log(data);
+                getCarts();
+            })
+            .catch((error) => console.log(error));
     }
 
     const useStyles = makeStyles({
@@ -72,10 +68,16 @@ export const Customers = () => {
         button: {
             margin: 2,
         },
-        link: {
-            textDecoration: 'none',
-            color: '#FFFFFF',
-        }
+        image: {
+            height: 30,
+            marginRight: 10,
+        },
+        img: {
+            display: 'block',
+            maxWidth: '100%',
+            maxHeight: '100%',
+            marginRight: 4,
+        },
     });
 
     const classes = useStyles();
@@ -86,20 +88,8 @@ export const Customers = () => {
             justify="center"
             alignItems="center">
             {
-                customers.length > 0 ?
-
+                carts.length > 0 ?
                     <Paper className={classes.root}>
-                        <Link to="/customers/add" className={classes.link}>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                className={classes.button}
-                                startIcon={<AddIcon />}
-                                className={classes.link}
-                            >
-                                Add Customer
-                            </Button>
-                        </Link>
                         <TableContainer >
                             <Table stickyHeader aria-label="sticky table">
                                 <TableHead>
@@ -108,16 +98,16 @@ export const Customers = () => {
                                             ID
                                         </TableCell>
                                         <TableCell>
-                                            Name
+                                            Date
                                         </TableCell>
                                         <TableCell>
-                                            Last Name
+                                            Customer
                                         </TableCell>
                                         <TableCell>
-                                            E-mail
+                                            Products
                                         </TableCell>
                                         <TableCell>
-                                            Phone
+                                            Total
                                         </TableCell>
                                         <TableCell>
                                             Actions
@@ -125,23 +115,31 @@ export const Customers = () => {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {customers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((p) => {
+                                    {carts.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((c) => {
                                         return (
-                                            <TableRow hover role="checkbox" tabIndex={-1} key={p.id}>
+                                            <TableRow hover role="checkbox" tabIndex={-1} key={c.id}>
                                                 <TableCell component="th" scope="row">
-                                                    {p.id}
+                                                    {c.id}
                                                 </TableCell>
-                                                <TableCell >{p.name}</TableCell>
-                                                <TableCell >{p.lastName}</TableCell>
-                                                <TableCell >{p.email}</TableCell>
-                                                <TableCell >{p.phoneNumber}</TableCell>
+                                                <TableCell>
+                                                    {c.dateTime}
+                                                </TableCell>
+                                                <TableCell >{c.customer.name} {c.customer.lastName} </TableCell>
                                                 <TableCell >
-                                                    <Link to={`/customers/update/${p.id}`} className={classes.link}>
-                                                        <Button variant="contained" color="primary" className={classes.button} className={classes.link}>
+                                                    {c.products.map((p) => {
+                                                        return (<ButtonBase className={classes.image}>
+                                                            <img className={classes.img} alt="complex" src="https://i.ytimg.com/vi/aWttx80Uflk/hqdefault.jpg" />
+                                                            {p.description} • ${p.price}</ButtonBase>)
+                                                    })}
+                                                </TableCell>
+                                                <TableCell > ${c.total}</TableCell>
+                                                <TableCell >
+                                                    <Link to={`/categories/update/${c.id}`}>
+                                                        <Button variant="contained" color="primary" className={classes.button}>
                                                             Update
-                                                        </Button>
+                                                            </Button>
                                                     </Link>
-                                                    <Button variant="contained" color="secondary" onClick={() => deleteCustomer(p.id, p.lastName)} className={classes.button}>
+                                                    <Button variant="contained" color="secondary" onClick={() => deleteCart(c.customer.id, c.id)} className={classes.button}>
                                                         Delete
                                                     </Button>
                                                 </TableCell>
@@ -155,7 +153,7 @@ export const Customers = () => {
                         <TablePagination
                             rowsPerPageOptions={[10, 25, 100]}
                             component="div"
-                            count={customers.length}
+                            count={carts.length}
                             rowsPerPage={rowsPerPage}
                             page={page}
                             onChangePage={handleChangePage}
@@ -166,6 +164,7 @@ export const Customers = () => {
                     :
                     <CircularProgress color="secondary" />
             }
-        </Grid>
+
+        </Grid >
     );
 }

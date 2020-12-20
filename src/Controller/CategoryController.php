@@ -59,8 +59,8 @@ class CategoryController extends AbstractApiController
 
         $form->handleRequest($request);
 
-        if (!$form->isSubmitted() || !$form->isValid()) {
-            return $this->respond($form, Response::HTTP_BAD_REQUEST);
+        if (!$form->isSubmitted()) {
+            return $this->respond($form);
         }
 
         /** @var Category $categoryUpdated */
@@ -68,6 +68,8 @@ class CategoryController extends AbstractApiController
 
         $this->getDoctrine()->getManager()->persist($categoryUpdated);
         $this->getDoctrine()->getManager()->flush();
+
+        return $this->json($categoryUpdated);
 
         return $this->json($categoryUpdated);
     }
